@@ -1,0 +1,67 @@
+URL_1: https://www.imdb.com/chart/bottom
+- Lista dos 10 filmes com pior nota no site.
+A lista deve ser exibida em ordem decrescente de melhor para pior nota.
+- Deve conter nome do filme (em inglês)
+- Nota (com uma casa decimal)
+- Diretor(es)
+- Elenco principal
+- Ao menos um comentario positivo sobre o filme (comentário que deu uma nota >= 5)
+-------------------------------------------------------------
+URL_2: https://www.imdb.com
+
+Primeiro Passo
+-------------------------------------------------------------
+On URL_1:
+
+Table class: chart full-width
+[tbody] pegar 10 [tr]
+Cada [tr] possui 5[td], dos quais nos interessa: 
+2º[td] = restante do link filme para URL_2 --> Tag "a" e attr "href"
+	span class: secondaryInfo --> possui o ano do filme
+3º[td] = IMDB rating (1)
+-------------------------------------------------------------
+Resultado: filme_link_rest, ano do filme, IMDB rating (1)
+
+Segundo Passo
+-------------------------------------------------------------
+On URL_2: "https://www.imdb.com/"+link_rest
+.titulo original class: OriginalTitle__OriginalTitleText-sc-jz9bzr-0 AEcFu
+.IMDB rating (2) class: AggregateRatingButton__RatingScore-sc-1ll29m0-1 iTLWoV
+.rest_link_avaliacao:tag "a" class: ipc-link ipc-link--baseAlt ipc-link--touch-target ReviewContent__StyledTextLink-sc-vlmc3o-2 dTjvFT isReview
+	"h ref" 
+.Direção ul class (1º elemento): ipc-inline-list ipc-inline-list--show-dividers ipc-inline-list--inline ipc-metadata-list-item__list-content baseAlt
+	pegar todos li
+		pegar todos de tag "a"
+			"h ref" --> restante do link diretor para URL_2
+.Elenco principal class (pegar cada elemento): StyledComponents__ActorName-sc-y9ygcu-1 ezTgkS
+-------------------------------------------------------------
+Resultado: titulo original, IMDB rating (2), diretor_link_rest, elenco principal, avaliacao_rest_link
+
+
+Terceiro Passo
+-------------------------------------------------------------
+na pg do diretor:
+.nome do diretor 1º elemento de class: itemprop
+-------------------------------------------------------------
+nome do diretor (fazer isso para cada elemento da lista de string diretor_link_rest)
+
+Quarto Passo
+-------------------------------------------------------------
+https://www.imdb.com/title/tt1213644/reviews?ref_=tt_ov_rt
+remover: "ref_=tt_ov_rt"
+adicionar: "sort=userRating&dir=desc&ratingFilter=0"
+usar: string.replace("ref_=tt_ov_rt","sort=userRating&dir=desc&ratingFilter=0")
+rest_link_comentario div class: lister-item-content
+							tag "a"
+								attr "h ref"
+-------------------------------------------------------------
+rest_link_comentario
+
+Quinto Passo
+-------------------------------------------------------------
+comentario_texto class: text show-more__control
+-------------------------------------------------------------
+comentario_texto
+
+
+
