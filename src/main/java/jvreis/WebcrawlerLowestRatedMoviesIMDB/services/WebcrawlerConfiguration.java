@@ -31,7 +31,7 @@ public class WebcrawlerConfiguration {// obs.: editar caminho do arquivo em caso
 	}
 	// -------------------------
 	
-	//Construtor que já realizar a extração de dados do IMDB e salva em um objeto do tipo WebcrawlerConfiguration
+	//Construtor que já realiza a extração de dados do IMDB e salva em um objeto do tipo WebcrawlerConfiguration
 	public WebcrawlerConfiguration() {
 		List<String> resultado = new ArrayList<String>();
 		resultado = executar();
@@ -42,12 +42,12 @@ public class WebcrawlerConfiguration {// obs.: editar caminho do arquivo em caso
 	// ------------------------------------------------------------------
 
 	private List<String> executar() {
-		List<Filme> dados;
+		List<Filme> filmes;
 		List<String> resultado = new ArrayList<String>();
 
-		dados = Webcrawler.search();
-		resultado.add(converterMovieListEmTXT(dados));
-		resultado.add(converterMovieListEmHTML(dados));
+		filmes = Webcrawler.search();
+		resultado.add(converterMovieListEmTXT(filmes));
+		resultado.add(converterMovieListEmHTML(filmes));
 				
 		escreverArquivo(resultado.get(0), path);
 		System.out.println(resultado.get(0));

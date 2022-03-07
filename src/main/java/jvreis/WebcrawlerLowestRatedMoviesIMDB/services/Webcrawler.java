@@ -12,7 +12,7 @@ import jvreis.WebcrawlerLowestRatedMoviesIMDB.classes.Filme;
 
 //Para melhor entendimento do código, favor verificar arquivo "Ideia para webcrawler IMDB - lowest rated movies.txt"
 
-public class Webcrawler {// classe que contem os dados HTML
+public class Webcrawler {
 //-------------------------------------------------
 	// retorna uma lista de descrição dos Filmes (olhar classe Filme)
 	public static List<Filme> search() {
@@ -157,7 +157,7 @@ public class Webcrawler {// classe que contem os dados HTML
 
 	// --------------------------------------------------
 	
-	//Métodos Sexundários
+	//Métodos Secundários
 	// ----------------------------------------------------------
 	// Titulo em portugues
 	private static String extrairTituloPortugues(Document documento) {
