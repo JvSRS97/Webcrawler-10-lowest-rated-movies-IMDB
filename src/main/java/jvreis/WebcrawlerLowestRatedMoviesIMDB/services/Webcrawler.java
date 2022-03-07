@@ -36,9 +36,12 @@ public class Webcrawler {// classe que contem os dados HTML
 		for (Filme filme : filmes) {
 			documento = getHTML(filme.link);
 			filme = extrairInformacoesDoFilme(documento, filme, link2, contador);
+			contador++;
 		}
 		return filmes;
 	}
+	// --------------------------------------------------
+
 	
 	//Métodos Principais
 	// --------------------------------------------------
@@ -147,7 +150,7 @@ public class Webcrawler {// classe que contem os dados HTML
 		filme = atualizarInformacoes(filme, tituloPortugues, tituloIngles, imdb2, elencoPrincipal, diretores, comentarioLink, comentarioTexto);
 		
 		//Imprimindo carregamento
-		contador = imprimirCarregamento(contador);
+		imprimirCarregamento(contador);
 		
 		return filme;
 	}
@@ -272,16 +275,13 @@ public class Webcrawler {// classe que contem os dados HTML
 	// ----------------------------------------------------------
 
 	// Impressão de carregamento
-	private static int imprimirCarregamento(int contador) {
-		if (contador != 10) {
+	private static void imprimirCarregamento(int contador) {
+		if (contador < 10) {
 			System.out.print(":");
-			contador++;
 		} else {
 			System.out.println(":]");
 			System.out.println("\t[:::100%:::]\n");
-			contador++;
 		}
-		return contador;
 	}
 	
 	//Métodos de formatação ou correção

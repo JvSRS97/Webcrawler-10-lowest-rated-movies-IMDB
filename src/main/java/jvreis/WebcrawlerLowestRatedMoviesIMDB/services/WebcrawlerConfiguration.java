@@ -5,7 +5,6 @@ import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
-
 import jvreis.WebcrawlerLowestRatedMoviesIMDB.classes.Filme;
 
 public class WebcrawlerConfiguration {// obs.: editar caminho do arquivo em caso de mudan�a de pasta
@@ -74,8 +73,8 @@ public class WebcrawlerConfiguration {// obs.: editar caminho do arquivo em caso
 	private String converterMovieListEmTXT(List<Filme> filmes) {// convertendo lista em texto numa única variável
 		String txt = "Created by João Victor Reis\n\n";
 		int i, id;
-		List<String> diretores, elencoPrincipal;
-		String tituloPortugues, tituloIngles, link, imdbRating1, imdbRating2, ano, comentarioLink,
+		List<String> diretoresLista, elencoPrincipalLista;
+		String tituloPortugues, tituloIngles, link, imdbRating1, imdbRating2, ano, diretores, elencoPrincipal, comentarioLink,
 				comentarioTexto;
 		for (i = 0; i < filmes.size(); i++) {
 			id = filmes.get(i).getId();
@@ -85,15 +84,22 @@ public class WebcrawlerConfiguration {// obs.: editar caminho do arquivo em caso
 			imdbRating1 = filmes.get(i).getImdbRating1();
 			imdbRating2 = filmes.get(i).getImdbRating2();
 			ano = filmes.get(i).getAno();
-			diretores = filmes.get(i).getDiretores();
-			elencoPrincipal = filmes.get(i).getElencoPrincipal();
+			
+			diretoresLista = filmes.get(i).getDiretores();
+			diretores = pularLinhaEmListaParaTXT(diretoresLista);	
+			
+			elencoPrincipalLista = filmes.get(i).getElencoPrincipal();
+			elencoPrincipal = pularLinhaEmListaParaTXT(elencoPrincipalLista);
+			
+			
 			comentarioLink = filmes.get(i).getComentarioLink();
-			comentarioTexto = filmes.get(i).getComentarioTexto();
+			comentarioTexto = "\""+filmes.get(i).getComentarioTexto()+"\"";
+			comentarioTexto = pularLinhaEmComentarioTXT(comentarioTexto);
 
-			txt += "ID: "+id+";\nTitulo portugues: " + tituloPortugues + ";\nTitulo ingles: " + tituloIngles + ";\nLink: " + link
-					+ ";\nIMDB 1: " + imdbRating1 + ";\nIMDB 2: " + imdbRating2 + ";\nAno: " + ano
-					+ ";\nDiretores: " + diretores + ";\nElenco principal: " + elencoPrincipal + ";\nLink do comentario: "
-					+ comentarioLink + ";\nTexto do comentario: " + comentarioTexto + ".\n\n";
+			txt += "-> ID: "+id+";\n-> Titulo portugues: " + tituloPortugues + ";\n-> Titulo ingles: " + tituloIngles + ";\n-> Link: " + link
+					+ ";\n-> IMDB 1: " + imdbRating1 + ";\n-> IMDB 2: " + imdbRating2 + ";\nAno: " + ano
+					+ ";\n-> Diretores: " + diretores + ";\n-> Elenco principal: " + elencoPrincipal + ";\n-> Link do comentario: "
+					+ comentarioLink + ";\n-> Texto do comentario: " + comentarioTexto + ".\n\n";
 		}
 		return txt;
 	}
@@ -101,12 +107,12 @@ public class WebcrawlerConfiguration {// obs.: editar caminho do arquivo em caso
 	private String converterMovieListEmHTML(List<Filme> filmes) {// convertendo lista em texto numa única variável
 		String html;
 		int i, id;
-		List<String> diretores, elencoPrincipal;
-		String tituloPortugues, tituloIngles, link, imdbRating1, imdbRating2, ano, comentarioLink,
+		List<String> diretoresLista, elencoPrincipalLista;
+		String tituloPortugues, tituloIngles, link, imdbRating1, imdbRating2, ano, diretores, elencoPrincipal, comentarioLink,
 				comentarioTexto;
-		html = "<html> <body> <pre> <title>Lista dos 10 filmes com pior nota IMDB</title>";
-		html += "<font size=7><center><b>Lista dos 10 filmes com pior nota <a href=https://www.imdb.com/chart/bottom target=\\\"_blank\\\">IMDB</a></b></center></font>";
-		html += "<br><font color=Red>Created by</font> <font color=Blue>João Victor Reis<br><br></font>";
+		html = "<!DOCTYPE html><html> <head></head> <body style=\"background-color:#FAEBD7;color:black;\"> <title>Lista dos 10 filmes com pior nota IMDB</title>"; 
+		html += "<font size=7><center><b style=\"color:#AFAFAF;\">Lista dos 10 filmes com pior nota <a href=https://www.imdb.com/chart/bottom target=\\\"_blank\\\">IMDB</a></b></center></font>";
+		html += "<br><font color=Red>Created by</font> <font color=Blue>João Victor Reis<br><br></font><pre>";
 		for (i = 0; i < filmes.size(); i++) {
 			id = filmes.get(i).getId();
 			tituloPortugues = filmes.get(i).getTituloPortugues();
@@ -115,16 +121,85 @@ public class WebcrawlerConfiguration {// obs.: editar caminho do arquivo em caso
 			imdbRating1 = filmes.get(i).getImdbRating1();
 			imdbRating2 = filmes.get(i).getImdbRating2();
 			ano = filmes.get(i).getAno();
-			diretores = filmes.get(i).getDiretores();
-			elencoPrincipal = filmes.get(i).getElencoPrincipal();
+			
+			diretoresLista = filmes.get(i).getDiretores();
+			diretores = pularLinhaEmListaParaHTML(diretoresLista);	
+			
+			elencoPrincipalLista = filmes.get(i).getElencoPrincipal();
+			elencoPrincipal = pularLinhaEmListaParaHTML(elencoPrincipalLista);
+			
 			comentarioLink = "<a href="+filmes.get(i).getComentarioLink()+" target=\"_blank\">Comment Link</a>";
-			comentarioTexto = filmes.get(i).getComentarioTexto();
-
-			html += "ID: "+id+";<br>Titulo portugues: " + tituloPortugues + ";<br>Titulo ingles: " + tituloIngles + ";<br>Link: " + link+ ";<br>IMDB 1: " + imdbRating1 + ";<br>IMDB 2: " + imdbRating2 + ";<br>Ano: " + ano
-					+ ";<br>Diretores: " + diretores + ";<br>Elenco principal: " + elencoPrincipal + ";<br>Link do comentario: "
-					+comentarioLink+";<br>Texto do comentario: " + comentarioTexto + "<br><br>";
+			comentarioTexto = "\""+filmes.get(i).getComentarioTexto()+"\"";
+			comentarioTexto = pularLinhaEmComentarioHTML(comentarioTexto);
+			html += "<font color=Red>-></font> ID: "+id+";<br><font color=Blue>-></font> Titulo portugues: " + tituloPortugues + ";<br><font color=Blue>-></font> Titulo ingles: " + tituloIngles + ";<br><font color=Blue>-></font> Link: " + link+ ";<br><font color=Blue>-></font> IMDB 1: " + imdbRating1 + ";<br><font color=Blue>-></font> IMDB 2: " + imdbRating2 + ";<br><font color=Blue>-></font> Ano: " + ano
+					+ ";<br><font color=Blue>-></font> Diretores: " + diretores + ";<br><font color=Blue>-></font> Elenco principal: " + elencoPrincipal + ";<br><font color=Blue>-></font> Link do comentario: "
+					+comentarioLink+";<br><font color=Blue>-></font> Texto do comentario: " + comentarioTexto +"<br><br>";
 		}
 		html += "</pre> </body> </html>";
 		return html;
+	}
+	
+	private String pularLinhaEmComentarioTXT(String comentario) {
+		int contador=0;
+		String resultadoComentario = "";
+		
+		for(int i=0;i<comentario.length();i++) {
+			resultadoComentario += comentario.charAt(i);
+			if((comentario.charAt(i)==32)){//char espaço = 32
+				contador++;
+				if((contador%22)==0) {
+					resultadoComentario += "\n";
+				}
+			}
+		}	
+		return resultadoComentario;
+	}
+	
+	private String pularLinhaEmComentarioHTML(String comentario) {
+		int contador=0;
+		String resultadoComentario = "";
+		
+		for(int i=0;i<comentario.length();i++) {
+			resultadoComentario += comentario.charAt(i);
+			if((comentario.charAt(i)==32)){//char espaço = 32
+				contador++;
+				if((contador%22)==0) {
+					resultadoComentario += "<br>";
+				}
+			}
+		}	
+		return resultadoComentario;
+	}
+	
+	private String pularLinhaEmListaParaTXT(List<String> lista) {
+		String resultado = "";
+		
+		for(int i=0;i < lista.size();i++) {
+			if(i==(lista.size()-1)) {
+				resultado += lista.get(i);	
+			}else {
+				resultado += lista.get(i)+", ";
+			}
+			if(((i%8)==0) && (i>0)){
+					resultado += "\n";
+				}
+		}	
+		return resultado;
+	}
+	
+	private String pularLinhaEmListaParaHTML(List<String> lista) {
+		String resultado = "";
+		
+		for(int i=0;i < lista.size();i++) {
+			if(i==(lista.size()-1)) {
+				resultado += lista.get(i);	
+			}else {
+				resultado += lista.get(i)+", ";
+			}
+			if(((i%8)==0) && (i>0)){
+					resultado += "<br>";
+				}
+		}	
+		return resultado;
 	}
 }
