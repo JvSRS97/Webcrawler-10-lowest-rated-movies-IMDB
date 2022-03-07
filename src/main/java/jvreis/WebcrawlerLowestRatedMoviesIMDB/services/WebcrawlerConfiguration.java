@@ -9,7 +9,7 @@ import java.util.List;
 import jvreis.WebcrawlerLowestRatedMoviesIMDB.classes.Filme;
 
 public class WebcrawlerConfiguration {// obs.: editar caminho do arquivo em caso de mudan�a de pasta
-	private String path = "C:\\Users\\jvict\\eclipse-workspace\\webcrawler-lowestmovies-imdb\\Webcrawler-10-lowest-rated-movies-IMDB.txt";
+	private String path = "C:\\Users\\jvict\\eclipse-workspace\\webcrawler-lowest-rated-movies-imdb\\Webcrawler-10-lowest-rated-movies-IMDB.txt";
 	private OutputStreamWriter writer;
 	private String resultadoTXT;
 	private String resultadoHTML;
